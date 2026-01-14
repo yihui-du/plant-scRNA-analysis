@@ -1,0 +1,132 @@
+# 植物单细胞分析配置文件
+# 所有参数可在此处修改
+
+# 质量控制参数
+qc:
+  # 最小/最大基因数
+  min_genes: 200
+  max_genes: 5000
+  
+  # 最小/最大UMI数
+  min_counts: 300
+  max_counts: 50000
+  
+  # 线粒体基因百分比阈值
+  mt_percent_threshold: 10
+  
+  # 是否移除线粒体基因
+  remove_mt: false
+
+# 正规化和预处理
+preprocessing:
+  # 正规化方法
+  normalization: "log1p"  # "log1p" 或 "logcpm"
+  
+  # 高变基因选择数量
+  n_top_genes: 2000
+  
+  # 是否使用高变基因进行降维
+  use_hvg: true
+
+# 降维参数
+dimensionality_reduction:
+  # PCA
+  pca:
+    n_components: 50
+    
+  # UMAP
+  umap:
+    n_neighbors: 15
+    min_dist: 0.1
+    metric: "euclidean"
+    
+  # t-SNE
+  tsne:
+    perplexity: 30
+    n_iter: 1000
+
+# 聚类参数
+clustering:
+  # Leiden聚类分辨率（较高值=更多cluster）
+  resolution: 0.8
+  
+  # KNN邻居数
+  n_neighbors: 15
+  
+  # 使用的降维方法
+  use_rep: "X_pca"
+
+# HDWGCNA参数
+wgcna:
+  # 软功率选择
+  soft_power: 6
+  
+  # 最小模块大小
+  min_module_size: 30
+  
+  # 模块合并阈值
+  merge_threshold: 0.25
+  
+  # 网络类型
+  network_type: "signed"  # "signed" 或 "unsigned"
+
+# 功能富集参数
+enrichment:
+  # GO参数
+  go:
+    ontology: ["BP", "CC", "MF"]  # Biological Process, Cellular Component, Molecular Function
+    pvalue_threshold: 0.05
+    qvalue_threshold: 0.1
+    
+  # KEGG参数
+  kegg:
+    organism: "ath"  # 拟南芥，其他物种: 水稻=osa, 玉米=zma
+    pvalue_threshold: 0.05
+    qvalue_threshold: 0.1
+    
+  # 最小/最大基因集大小
+  min_gene_set_size: 5
+  max_gene_set_size: 500
+
+# 输入输出路径
+paths:
+  # 输入数据路径
+  raw_data: "../data/raw/"
+  processed_data: "../data/processed/"
+  
+  # 输出结果路径
+  output_dir: "../results/"
+  
+  # 配置和日志
+  logs_dir: "../results/logs/"
+  plots_dir: "../results/plots/"
+
+# 日志和调试
+logging:
+  # 日志级别: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+  
+  # 是否保存详细日志
+  save_log: true
+
+# 计算资源
+resources:
+  # 使用的CPU线程数
+  n_jobs: -1  # -1 表示使用全部可用CPU
+  
+  # 是否使用GPU（如果可用）
+  use_gpu: false
+
+# 分析流程控制
+pipeline:
+  # 哪些步骤要执行
+  steps:
+    quality_control: true
+    preprocessing: true
+    clustering: true
+    annotation: true
+    hdwgcna: true
+    enrichment: true
+    
+  # 是否生成详细的中间结果
+  save_intermediate: true

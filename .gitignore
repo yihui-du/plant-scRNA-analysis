@@ -1,0 +1,83 @@
+# 数据文件 - 通常太大无法上传
+data/raw/
+data/processed/
+results/
+*.h5ad
+*.h5
+*.csv
+*.xlsx
+*.xls
+
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# 临时文件
+*.tmp
+*.log
+.Rhistory
+.Rdata
+
+# 分析临时文件
+temp/
+tmp/
+cache/
+*.tmp.*
+
+# 操作系统
+Thumbs.db
+.DS_Store
+
+# 大型数据文件
+*.fastq
+*.fq
+*.fastq.gz
+*.fq.gz
+*.bam
+*.bai
+*.vcf
+
+# 特定输出文件夹（如果需要）
+# 但保留结构
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!results/.gitkeep
