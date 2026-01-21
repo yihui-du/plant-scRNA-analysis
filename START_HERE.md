@@ -39,21 +39,29 @@
 fastq_conversion.py                      →  scripts/01_fastq_conversion/
 your_fastq_code.py                       →  scripts/01_fastq_conversion/
 
-downstream_analysis.py                   →  scripts/02_downstream_analysis/
-clustering.py                            →  scripts/02_downstream_analysis/
+cellranger_quantification.py             →  scripts/02_quantification/
+cellranger_count.sh                      →  scripts/02_quantification/
 
-hdwgcna.py                               →  scripts/03_hdwgcna/
-module_analysis.py                       →  scripts/03_hdwgcna/
+downstream_analysis.py                   →  scripts/03_downstream_analysis/
+clustering.py                            →  scripts/03_downstream_analysis/
 
-enrichment.py                            →  scripts/04_enrichment/
-go_kegg.py                               →  scripts/04_enrichment/
+hdwgcna.py                               →  scripts/04_hdwgcna/
+hdwgcna_coexpression.R                   →  scripts/04_hdwgcna/
+subnetwork_plot.R                        →  scripts/04_hdwgcna/
+
+enrichment.py                            →  scripts/05_enrichment/
+enrichment_analysis.R                    →  scripts/05_enrichment/
+
+differential_expression.R                →  scripts/06_differential_expression/
 ```
 
 ### 检查清单：
 - [ ] FASTQ转换代码已复制
+- [ ] cellranger 定量分析代码已复制
 - [ ] 下游分析代码已复制
 - [ ] HDWGCNA代码已复制
 - [ ] 富集分析代码已复制
+- [ ] 差异基因分析代码已复制
 - [ ] 更新了 `issues/CODE_UPLOAD_CHECKLIST.md`
 
 ---
@@ -86,17 +94,28 @@ python -c "import scanpy; print(f'Scanpy版本: {scanpy.__version__}')"
 cd scripts/01_fastq_conversion
 python fastq_conversion.py --input ../../data/raw --output ../../data/processed
 
+# 定量分析
+cd ../02_quantification
+python cellranger_quantification.py --id sample_id --fastqs /path/to/fastqs --transcriptome /path/to/ref --sample sample_name
+
 # 下游分析
-cd ../02_downstream_analysis
+cd ../03_downstream_analysis
 python main_analysis.py --config ../../configs/analysis_config.yaml
 
 # HDWGCNA
-cd ../03_hdwgcna
-python hdwgcna_analysis.py --input ../../data/processed/expression_matrix.csv
+cd ../04_hdwgcna
+Rscript hdwgcna_coexpression.R
+
+# 子网分析
+Rscript subnetwork_plot.R
 
 # 富集分析
-cd ../04_enrichment
-python enrichment_analysis.py --input ../../results/gene_modules.csv
+cd ../05_enrichment
+Rscript enrichment_analysis.R
+
+# 差异基因分析
+cd ../06_differential_expression
+Rscript differential_expression.R
 ```
 
 ### ✅ 调整参数

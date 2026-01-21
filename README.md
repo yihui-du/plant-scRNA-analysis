@@ -10,9 +10,11 @@
 plant-scRNA-analysis/
 ├── scripts/                          # 分析脚本目录
 │   ├── 01_fastq_conversion/         # FASTQ格式转换脚本
-│   ├── 02_downstream_analysis/      # 主要下游分析流程
-│   ├── 03_hdwgcna/                  # HDWGCNA共表达分析
-│   └── 04_enrichment/               # GO/KEGG富集分析
+│   ├── 02_quantification/           # cellranger 定量分析
+│   ├── 03_downstream_analysis/      # 主要下游分析流程
+│   ├── 04_hdwgcna/                  # HDWGCNA共表达分析
+│   ├── 05_enrichment/               # GO/KEGG富集分析
+│   └── 06_differential_expression/  # 差异基因分析
 ├── data/                            # 数据存储目录
 │   ├── raw/                         # 原始数据
 │   └── processed/                   # 处理后的数据
@@ -32,8 +34,14 @@ plant-scRNA-analysis/
 - **主要脚本**:
   - `fastq_conversion.py` - 格式转换主程序
   - `quality_control.py` - 质量检查脚本
+
+### 2. 定量分析 (`02_quantification/`)
+- **功能**: 使用 cellranger 进行 10x 单细胞数据的质控、比对和定量
+- **主要脚本**:
+  - `cellranger_quantification.py` - cellranger count Python包装
+  - `cellranger_count.sh` - cellranger count Bash脚本
   
-### 2. 下游分析 (`02_downstream_analysis/`)
+### 3. 下游分析 (`03_downstream_analysis/`)
 - **功能**: 包括比对、定量、质控、聚类、注释等
 - **主要脚本**:
   - `read_mapping.py` - 测序数据比对
@@ -42,7 +50,7 @@ plant-scRNA-analysis/
   - `clustering.py` - 细胞聚类分析
   - `cell_annotation.py` - 细胞类型注释
   
-### 3. HDWGCNA分析 (`03_hdwgcna/`)
+### 4. HDWGCNA分析 (`04_hdwgcna/`)
 - **功能**: 加权基因共表达网络分析
 - **主要脚本**:
   - `wgcna_preprocessing.py` - 数据预处理
@@ -50,12 +58,18 @@ plant-scRNA-analysis/
   - `module_analysis.py` - 模块分析和可视化
   - `trait_correlation.py` - 性状关联分析
 
-### 4. 功能富集分析 (`04_enrichment/`)
+### 5. 功能富集分析 (`05_enrichment/`)
 - **功能**: GO和KEGG通路富集分析
 - **主要脚本**:
   - `go_enrichment.py` - Gene Ontology富集
   - `kegg_enrichment.py` - KEGG通路富集
   - `enrichment_visualization.py` - 富集结果可视化
+  - `enrichment_analysis.R` - 差异基因富集与可视化
+
+### 6. 差异基因分析 (`06_differential_expression/`)
+- **功能**: 差异基因识别与标志基因分析
+- **主要脚本**:
+  - `differential_expression.R` - Seurat 差异基因分析
 
 ## 环境要求
 
